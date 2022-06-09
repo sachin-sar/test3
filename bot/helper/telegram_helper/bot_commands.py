@@ -30,6 +30,7 @@ class _BotCommands:
         self.StatsCommand = getCommand('STATS_COMMAND', f'stats{CMD_INDEX}')
         self.HelpCommand = getCommand('HELP_COMMAND', f'help{CMD_INDEX}')
         self.LogCommand = getCommand('LOG_COMMAND', f'log{CMD_INDEX}')
+        self.SpeedCommand = getCommand('SPEEDTEST_COMMAND', f'speedtest{CMD_INDEX}')
         self.CloneCommand = getCommand('CLONE_COMMAND', f'clone{CMD_INDEX}')
         self.CountCommand = getCommand('COUNT_COMMAND', f'count{CMD_INDEX}')
         self.WatchCommand =  getCommand('WATCH_COMMAND', f'watch{CMD_INDEX}')
