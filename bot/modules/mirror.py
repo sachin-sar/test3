@@ -193,6 +193,8 @@ class MirrorListener:
             DbManger().rm_complete_task(self.message.link)
 
     def onUploadComplete(self, link: str, size, files, folders, typ, name: str):
+        uname = f'<a href="tg://user?id={self.message.from_user.id}">{self.message.from_user.first_name}</a>'
+        chat_id = str(LEECH_LOG)[5:][:-1]
         buttons = ButtonMaker()
         # this is inspired by def mirror to get the link from message
         mesg = self.message.text.split('\n')
@@ -206,7 +208,7 @@ class MirrorListener:
                 source_link = message_args[1]
                 if is_magnet(source_link):
                     link = telegraph.create_page(
-                        title='Helios-Mirror Source Link',
+                        title='Ark-Mirror Source Link',
                         content=source_link,
                     )["path"]
                     buttons.buildbutton(f"🔗 Source Link", f"https://telegra.ph/{link}")
@@ -222,7 +224,7 @@ class MirrorListener:
                             source_link = reply_text.strip()
                             if is_magnet(source_link):
                                 link = telegraph.create_page(
-                                    title='Helios-Mirror Source Link',
+                                    title='Ark-Mirror Source Link',
                                     content=source_link,
                                 )["path"]
                                 buttons.buildbutton(f"🔗 Source Link", f"https://telegra.ph/{link}")
@@ -282,7 +284,7 @@ class MirrorListener:
                     source_link = message_args[1]
                     if is_magnet(source_link):
                         link = telegraph.create_page(
-                            title='Helios-Mirror Source Link',
+                            title='Ark-Mirror Source Link',
                             content=source_link,
                         )["path"]
                         buttons.buildbutton(f"🔗 Source Link", f"https://telegra.ph/{link}")
@@ -298,7 +300,7 @@ class MirrorListener:
                         source_link = reply_text.strip()
                         if is_magnet(source_link):
                             link = telegraph.create_page(
-                                title='Helios-Mirror Source Link',
+                                title='Ark-Mirror Source Link',
                                 content=source_link,
                             )["path"]
                             buttons.buildbutton(f"🔗 Source Link", f"https://telegra.ph/{link}")
