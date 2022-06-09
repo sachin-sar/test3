@@ -753,6 +753,7 @@ def set_priority(hash_id):
 
 @app.route('/')
 def homepage():
+    return "<h1>See Ark Mirror Bot <a href='https://www.github.com/arkonn/Ark-Mirror'>@GitHub</a> By <a href='https://github.com/arkonn'>Arkonn</a></h1>"
 
 @app.errorhandler(NotFound404Error)
 def page_not_found(e):
