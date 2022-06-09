@@ -60,5 +60,6 @@ class _BotCommands:
         self.ClearLocalsCommand = f'clearlocals{CMD_INDEX}'
         self.AddleechlogCommand = getCommand('ADDLEECHLOG_COMMAND', f'addleechlog{CMD_INDEX}')
         self.RmleechlogCommand = getCommand('RMLEECHLOG_COMMAND', f'rmleechlog{CMD_INDEX}')
+        self.SpeedtestCommand = getCommand('SPEEDTEST_COMMAND', f'speedtest{CMD_INDEX}')
 
 BotCommands = _BotCommands()
