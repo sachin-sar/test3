@@ -367,7 +367,7 @@ def krakenfiles(page_link: str) -> str:
 def gdtot(url: str) -> str:
     if GDTOT_CRYPT is None:
         raise DDLException("GDTOT_CRYPT env var not provided")
-    client = requests.Session()
+    client = requests.rsession()
     client.cookies.update({'crypt': GDTOT_CRYPT})
     res = client.get(url)
     res = client.get(f"https://new.gdtot.nl/dld?id={url.split('/')[-1]}")
@@ -421,7 +421,7 @@ def parse_infou(data):
 def unified(url: str) -> str:
     if (UNIFIED_EMAIL or UNIFIED_PASS) is None:
         raise DDLException("UNIFIED_EMAIL and UNIFIED_PASS env vars not provided")
-    client = requests.Session()
+    client = requests.rsession()
     client.headers.update({
         "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36"
     })
@@ -509,7 +509,7 @@ def parse_info(res):
     return info_parsed
 
 def udrive(url: str) -> str:
-    client = requests.Session()
+    client = requests.rsession()
     if ('hubdrive' or 'drivehub') in url:
         client.cookies.update({'crypt': HUBDRIVE_CRYPT})
     if ('katdrive' or 'kolop') in url:
