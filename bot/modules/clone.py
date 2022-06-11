@@ -34,12 +34,12 @@ def _clone(message, bot, multi=0):
             return
     args = message.text.split(" ", maxsplit=1)
     reply_to = message.reply_to_message
-    link = ""
+    link = ''
     if len(args) > 1:
         link = args[1]
         if link.isdigit():
             multi = int(link)
-            link = ""
+            link = ''
         elif message.from_user.username:
             tag = f"@{message.from_user.username}"
         else:
@@ -94,6 +94,23 @@ def _clone(message, bot, multi=0):
                 link = udrive(link)
             if is_drivefire:
                 link = udrive(link)
+            deleteMessage(bot, msg)
+        except DirectDownloadLinkException as e:
+            deleteMessage(bot, msg)
+            return sendMessage(str(e), bot, message)
+    if is_gdtot:
+        try:
+            msg = sendMessage(f"Processing: <code>{link}</code>", bot, message)
+            link = gdtot(link)
+            deleteMessage(bot, msg)
+        except DirectDownloadLinkException as e:
+            deleteMessage(bot, msg)
+            return sendMessage(str(e), bot, message)
+    if is_appdrive:
+        msg = sendMessage(f"Processing: <code>{link}</code>", bot, message)
+        try:
+            apdict = appdrive(link)
+            link = apdict.get('gdrive_link')
             deleteMessage(bot, msg)
         except DirectDownloadLinkException as e:
             deleteMessage(bot, msg)
