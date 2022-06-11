@@ -11,7 +11,7 @@ from bot.helper.telegram_helper.bot_commands import BotCommands
 from bot.helper.mirror_utils.status_utils.clone_status import CloneStatus
 from bot import bot,dispatcher,LOGGER,CLONE_LIMIT,STOP_DUPLICATE,download_dict,download_dict_lock,Interval, BOT_PM, MIRROR_LOGS
 from bot.helper.ext_utils.bot_utils import *
-from bot.helper.mirror_utils.download_utils.direct_link_generator import gdtot, appdrive
+from bot.helper.mirror_utils.download_utils.direct_link_generator import *
 from bot.helper.ext_utils.exceptions import DirectDownloadLinkException
 from telegram import ParseMode
 
