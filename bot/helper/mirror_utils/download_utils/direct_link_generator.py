@@ -461,28 +461,31 @@ def unified(url: str) -> str:
     if urlparse(url).netloc == 'driveapp.in' and not info_parsed['error']:
         res = client.get(info_parsed['gdrive_link'])
         drive_link = etree.HTML(res.content).xpath("//a[contains(@class,'btn')]/@href")[0]
+        info_parsed['gdrive_link'] = drive_link
         flink = drive_link
         return flink
 
     if urlparse(url).netloc == 'drivesharer.in' and not info_parsed['error']:
         res = client.get(info_parsed['gdrive_link'])
         drive_link = etree.HTML(res.content).xpath("//a[contains(@class,'btn btn-primary')]/@href")[0]
+        info_parsed['gdrive_link'] = drive_link
         flink = drive_link
         return flink
 
     if urlparse(url).netloc == 'drivebit.in' and not info_parsed['error']:
         res = client.get(info_parsed['gdrive_link'])
         drive_link = etree.HTML(res.content).xpath("//a[contains(@class,'btn btn-primary')]/@href")[0]
+        info_parsed['gdrive_link'] = drive_link
         flink = drive_link
         return flink
         
     if urlparse(url).netloc == 'driveace.in' and not info_parsed['error']:
         res = client.get(info_parsed['gdrive_link'])
         drive_link = etree.HTML(res.content).xpath("//a[contains(@class,'btn btn-primary')]/@href")[0]
+        info_parsed['gdrive_link'] = drive_link
         flink = drive_link
         return flink
 
-    flink = info_parsed['gdrive_link']
     info_parsed['src_url'] = url
     
     return flink
@@ -497,13 +500,13 @@ def parse_info(res):
     return info_parsed
 
 def udrive(url: str) -> str:
-    client = rsession()
-    if ('hubdrive' or 'drivehub') in url:
-        client.cookies.update({'crypt': HUBDRIVE_CRYPT})
-    if ('katdrive' or 'kolop') in url:
-        client.cookies.update({'crypt': KATDRIVE_CRYPT})
-    if 'drivefire' in url:
-        client.cookies.update({'crypt': DRIVEFIRE_CRYPT})
+    with rsession() as client:
+      if ('hubdrive' or 'drivehub') in url:
+          client.cookies.update({'crypt': HUBDRIVE_CRYPT})
+      if ('katdrive' or 'kolop') in url:
+          client.cookies.update({'crypt': KATDRIVE_CRYPT})
+      if 'drivefire' in url:
+          client.cookies.update({'crypt': DRIVEFIRE_CRYPT})
     res = client.get(url)
     info_parsed = parse_info(res)
     info_parsed['error'] = False
@@ -521,7 +524,8 @@ def udrive(url: str) -> str:
     
     try:
         res = client.post(req_url, headers=headers, data=data).json()['file']
-    except: return {'error': True, 'src_url': url}
+    except: 
+      return {'error': True, 'src_url': url}
     
     if 'drivefire.co' in url:
       return res
