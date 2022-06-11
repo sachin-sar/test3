@@ -459,7 +459,7 @@ def appdrive(url: str) -> str:
     else:
         raise DirectDownloadLinkException(f"{info_parsed['error_message']}")
         
- def parse_infou(data):
+def parse_infou(data):
     info = re.findall('>(.*?)<\/li>', data)
     info_parsed = {}
     for item in info:
