@@ -239,6 +239,9 @@ def is_gdtot_link(url: str):
     url = re_match(r'https?://.+\.gdtot\.\S+', url)
     return bool(url)
 
+def is_drivefire_link(url:str):
+    return "drivefire.co" in url
+
 def is_appdrive_link(url: str):
     url = re_match(r'https?://(?:\S*\.)?(?:appdrive|driveapp)\.in/\S+', url)
     return bool(url)
