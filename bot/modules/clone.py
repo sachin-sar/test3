@@ -30,11 +30,27 @@ from bot.helper.others.exceptions import DirectDownloadLinkException
 
 
 def _clone(message, bot, multi=0):
-    arguments = message.text.split(" ", maxsplit=1)
+    if BOT_PM:
+        try:
+            msg1 = f'Added your Requested link to Download\n'
+            send = bot.sendMessage(message.from_user.id, text=msg1)
+            send.delete()
+        except Exception as e:
+            LOGGER.warning(e)
+            bot_d = bot.get_me()
+            b_uname = bot_d.username
+            uname = f'<a href="tg://user?id={message.from_user.id}">{message.from_user.first_name}</a>'
+            botstart = f"http://t.me/{b_uname}"
+            buttons.buildbutton("Click Here to Start Me", f"{botstart}")
+            startwarn = f"Dear {uname},\n\n<b>I found that you haven't started me in PM (Private Chat) yet.</b>\n\nFrom now on i will give link and leeched files in PM and log channel only"
+            message = sendMarkup(startwarn, bot, message, InlineKeyboardMarkup(buttons.build_menu(2)))
+            Thread(target=auto_delete_message, args=(bot, message, message)).start()
+            return
+    args = message.text.split(" ", maxsplit=1)
     reply_to = message.reply_to_message
     link = ""
-    if len(arguments) > 1:
-        link = arguments[1]
+    if len(args) > 1:
+        link = args[1]
         if link.isdigit():
             multi = int(link)
             link = ""
@@ -122,7 +138,7 @@ def _clone(message, bot, multi=0):
                     "message_id": message.reply_to_message.message_id + 1,
                 },
             )
-            nextmsg = sendMessage(arguments[0], bot, nextmsg)
+            nextmsg = sendMessage(args[0], bot, nextmsg)
             nextmsg.from_user.id = message.from_user.id
             multi -= 1
             sleep(2)
