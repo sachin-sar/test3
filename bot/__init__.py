@@ -430,6 +430,42 @@ try:
 except:
     AS_DOCUMENT = False
 try:
+    UNIFIED_EMAIL = getConfig("UNIFIED_EMAIL")
+    if len(UNIFIED_EMAIL) == 0:
+        raise KeyError
+except:
+    UNIFIED_EMAIL = None
+try:
+    UNIFIED_PASS = getConfig("UNIFIED_PASS")
+    if len(UNIFIED_PASS) == 0:
+        raise KeyError
+except:
+    UNIFIED_PASS = None
+try:
+    GDTOT_CRYPT = getConfig("GDTOT_CRYPT")
+    if len(GDTOT_CRYPT) == 0:
+        raise KeyError
+except:
+    GDTOT_CRYPT = None
+try:
+    HUBDRIVE_CRYPT = getConfig("HUBDRIVE_CRYPT")
+    if len(HUBDRIVE_CRYPT) == 0:
+        raise KeyError
+except:
+    HUBDRIVE_CRYPT = None
+try:
+    KATDRIVE_CRYPT = getConfig("KATDRIVE_CRYPT")
+    if len(KATDRIVE_CRYPT) == 0:
+        raise KeyError
+except:
+    KATDRIVE_CRYPT = None
+try:
+    DRIVEFIRE_CRYPT = getConfig("DRIVEFIRE_CRYPT")
+    if len(DRIVEFIRE_CRYPT) == 0:
+        raise KeyError
+except:
+    DRIVEFIRE_CRYPT = None
+try:
     EQUAL_SPLITS = getConfig('EQUAL_SPLITS')
     EQUAL_SPLITS = EQUAL_SPLITS.lower() == 'true'
 except:
