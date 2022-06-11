@@ -98,23 +98,6 @@ def _clone(message, bot, multi=0):
         except DirectDownloadLinkException as e:
             deleteMessage(bot, msg)
             return sendMessage(str(e), bot, message)
-    if is_gdtot:
-        try:
-            msg = sendMessage(f"Processing: <code>{link}</code>", bot, message)
-            link = gdtot(link)
-            deleteMessage(bot, msg)
-        except DirectDownloadLinkException as e:
-            deleteMessage(bot, msg)
-            return sendMessage(str(e), bot, message)
-    if is_appdrive:
-        msg = sendMessage(f"Processing: <code>{link}</code>", bot, message)
-        try:
-            apdict = appdrive(link)
-            link = apdict.get('gdrive_link')
-            deleteMessage(bot, msg)
-        except DirectDownloadLinkException as e:
-            deleteMessage(bot, msg)
-            return sendMessage(str(e), bot, message)
     if is_gdrive_link(link):
         gd = GoogleDriveHelper()
         res, size, name, files = gd.helper(link)
