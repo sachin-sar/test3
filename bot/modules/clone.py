@@ -4,7 +4,7 @@ from telegram.ext import CommandHandler
 from threading import Thread
 from time import sleep
 
-from bot.helper.mirror.upload.gdrive_helper import GoogleDriveHelper
+from bot.helper.mirror_utils.upload_utils.gdriveTools import GoogleDriveHelper
 from bot.helper.tg_helper.msg_utils import (
     sendMessage,
     sendMarkup,
