@@ -399,7 +399,7 @@ def gen_payload(data, boundary=f'{"-"*6}_'):
     return data_string
 
 def parse_infou(data):
-    info = re.findall('>(.*?)<\/li>', data)
+    info = re_findall('>(.*?)<\/li>', data)
     info_parsed = {}
     for item in info:
         kv = [s.strip() for s in item.split(':', maxsplit = 1)]
@@ -417,7 +417,7 @@ def unified(url: str) -> str:
     account_login(client, url, account['email'], account['passwd'])
 
     res = client.get(url)
-    key = re.findall('"key",\s+"(.*?)"', res.text)[0]
+    key = re_findall('"key",\s+"(.*?)"', res.text)[0]
 
     ddl_btn = etree.HTML(res.content).xpath("//button[@id='drc']")
 
@@ -489,8 +489,8 @@ def unified(url: str) -> str:
 
 def parse_info(res):
     info_parsed = {}
-    title = re.findall('>(.*?)<\/h4>', res.text)[0]
-    info_chunks = re.findall('>(.*?)<\/td>', res.text)
+    title = re_findall('>(.*?)<\/h4>', res.text)[0]
+    info_chunks = re_findall('>(.*?)<\/td>', res.text)
     info_parsed['title'] = title
     for i in range(0, len(info_chunks), 2):
         info_parsed[info_chunks[i]] = info_chunks[i+1]
@@ -526,7 +526,7 @@ def udrive(url: str) -> str:
     if 'drivefire.co' in url:
       return res
     else:
-      gd_id = re.findall('gd=(.*)', res, re.DOTALL)[0]
+      gd_id = re_findall('gd=(.*)', res, re.DOTALL)[0]
     
     info_parsed['gdrive_url'] = f"https://drive.google.com/open?id={gd_id}"
     info_parsed['src_url'] = url
