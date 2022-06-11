@@ -535,4 +535,7 @@ def udrive(url: str) -> str:
     info_parsed['gdrive_url'] = f"https://drive.google.com/open?id={gd_id}"
     info_parsed['src_url'] = url
 
-    return info_parsed['gdrive_url']
+    if not info_parsed['error']:
+        return info_parsed
+    else:
+        raise DirectDownloadLinkException(f"{info_parsed['error_message']}")
