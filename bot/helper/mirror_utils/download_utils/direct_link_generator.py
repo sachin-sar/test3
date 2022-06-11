@@ -366,29 +366,17 @@ def krakenfiles(page_link: str) -> str:
 
 def gdtot(url: str) -> str:
     if GDTOT_CRYPT is None:
-        raise DDLException("GDTOT_CRYPT env var not provided")
-    client = requests.rsession()
-    client.cookies.update({'crypt': GDTOT_CRYPT})
-    res = client.get(url)
-    res = client.get(f"https://new.gdtot.nl/dld?id={url.split('/')[-1]}")
-    url = re.findall(r'URL=(.*?)"', res.text)[0]
-    info = {}
-    info['error'] = False
-    params = parse_qs(urlparse(url).query)
-    if 'gd' not in params or not params['gd'] or params['gd'][0] == 'false':
-        info['error'] = True
-        if 'msgx' in params:
-            info['message'] = params['msgx'][0]
-        else:
-            info['message'] = 'Invalid link'
-    else:
-        decoded_id = base64.b64decode(str(params['gd'][0])).decode('utf-8')
-        drive_link = f'https://drive.google.com/open?id={decoded_id}'
-        info['gdrive_link'] = drive_link
-    if not info['error']:
-        return info['gdrive_link']
-    else:
-        raise DDLException(f"{info['message']}")
+        raise DirectDownloadLinkException("GDTOT_CRYPT Cookie not provided")
+    with rsession() as client:
+        client.cookies.update({'crypt': CRYPT})
+        client.get(url)
+        res = client.get(f"https://{match[0]}.gdtot.{match[1]}/dld?id={url.split('/')[-1]}")
+    matches = re_findall('gd=(.*?)&', res.text)
+    try:
+        decoded_id = b64decode(str(matches[0])).decode('utf-8')
+    except:
+        raise DirectDownloadLinkException("ERROR: Try in your broswer, mostly file not found or user limit exceeded!")
+    return f'https://drive.google.com/open?id={decoded_id}'
 
 account = {
     'email': UNIFIED_EMAIL, 
@@ -420,8 +408,8 @@ def parse_infou(data):
 
 def unified(url: str) -> str:
     if (UNIFIED_EMAIL or UNIFIED_PASS) is None:
-        raise DDLException("UNIFIED_EMAIL and UNIFIED_PASS env vars not provided")
-    client = requests.rsession()
+        raise DirectDownloadLinkException("Vars not provided")
+    client = rsession()
     client.headers.update({
         "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36"
     })
@@ -509,7 +497,7 @@ def parse_info(res):
     return info_parsed
 
 def udrive(url: str) -> str:
-    client = requests.rsession()
+    client = rsession()
     if ('hubdrive' or 'drivehub') in url:
         client.cookies.update({'crypt': HUBDRIVE_CRYPT})
     if ('katdrive' or 'kolop') in url:
