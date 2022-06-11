@@ -162,6 +162,19 @@ def _clone(message, bot, multi=0):
             LOGGER.info(f"Cloning Done: {name}")
         if (is_gdtot or is_appdrive or is_gdflix or is_driveapp or is_driveace or is_drivelinks or is_drivebit or is_drivesharer or is_hubdrive or is_drivehub or is_katdrive or is_kolop or is_drivefire):
             gd.deletefile(link)
+        if MIRROR_LOGS:
+            try:
+                for chatid in MIRROR_LOGS:
+                    bot.sendMessage(chat_id=chatid, text=result + cc, reply_markup=button, parse_mode=ParseMode.HTML)
+            except Exception as e:
+                LOGGER.warning(e)
+        if BOT_PM and message.chat.type != 'private':
+            try:
+                bot.sendMessage(message.from_user.id, text=result, reply_markup=button,
+                                parse_mode=ParseMode.HTML)
+            except Exception as e:
+                LOGGER.warning(e)
+                return
     else:
         sendMessage(
             "Send Gdrive, GDToT or similar drive sharer Link along with command or by replying to the link by command",
