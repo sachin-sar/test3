@@ -161,7 +161,7 @@ def _clone(message, bot, multi=0):
             gd.deletefile(link)
     else:
         sendMessage(
-            "Send Gdrive or GDToT/AppDrive/DriveApp/GDFlix/DriveAce/DriveLinks/DriveBit/DriveSharer/HubDrive/DriveHub/KatDrive/Kolop/DriveFire Link along with command or by replying to the link by command",
+            "Send Gdrive or GDToT or Similar Drive Crypt Links along with command or by replying to the link by command",
             bot,
             message,
         )
